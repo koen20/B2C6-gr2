@@ -1,34 +1,42 @@
 ﻿@model B2C6_gr2.Models.Article
 
 @{
-    ViewBag.Title = "Details";
+    ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h1>Details</h1>
 
 <div>
     <h4>Article</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArtikelNaam)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.title)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArtikelNaam)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.price)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArtikelSoortId)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.price)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArtikelSoortId)
         </dd>
-
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArtikelPunten)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArtikelPunten)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Serienummer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Serienummer)
+        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

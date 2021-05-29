@@ -1,134 +1,153 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using B2C6_gr2.Data;
 using B2C6_gr2.Models;
 
 namespace B2C6_gr2.Controllers
 {
     public class ArticlesController : Controller
     {
-        private ArticleDBContext db = new ArticleDBContext();
+        private readonly B2C6_gr2Context _context;
+
+        public ArticlesController(B2C6_gr2Context context)
+        {
+            _context = context;
+        }
 
         // GET: Articles
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List <Article> list = new List<Article>();
-            try
-            {
-                list = db.Articles.ToList();
-            }
-            catch (Exception) { 
-            }
-            return View(list);
+            return View(await _context.Article.ToListAsync());
         }
 
         // GET: Articles/Details/5
-        public ActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return NotFound();
             }
-            Article article = db.Articles.Find(id);
+
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (article == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
+
             return View(article);
         }
 
         // GET: Articles/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         // POST: Articles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,title,price")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,ArtikelNaam,ArtikelSoortId,ArtikelPunten,Serienummer")] Article article)
         {
             if (ModelState.IsValid)
             {
-                db.Articles.Add(article);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                _context.Add(article);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
             return View(article);
         }
 
         // GET: Articles/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return NotFound();
             }
-            Article article = db.Articles.Find(id);
+
+            var article = await _context.Article.FindAsync(id);
             if (article == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             return View(article);
         }
 
         // POST: Articles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,title,price")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtikelNaam,ArtikelSoortId,ArtikelPunten,Serienummer")] Article article)
         {
+            if (id != article.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    _context.Update(article);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ArticleExists(article.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(article);
         }
 
         // GET: Articles/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return NotFound();
             }
-            Article article = db.Articles.Find(id);
+
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (article == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
+
             return View(article);
         }
 
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Article article = db.Articles.Find(id);
-            db.Articles.Remove(article);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var article = await _context.Article.FindAsync(id);
+            _context.Article.Remove(article);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        protected override void Dispose(bool disposing)
+        private bool ArticleExists(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return _context.Article.Any(e => e.Id == id);
         }
     }
 }
