@@ -17,13 +17,13 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm32v7 AS build
 COPY --from=builder qemu-arm-static /usr/bin
 WORKDIR /src
 COPY ["B2C6-gr2/B2C6-gr2.csproj", "B2C6-gr2/"]
-RUN dotnet restore "B2C6-gr2/B2C6-gr2.csproj"
+RUN dotnet restore "B2C6-gr2/B2C6-gr2.csproj" -r linux-arm
 COPY . .
 WORKDIR "/src/B2C6-gr2"
-RUN dotnet build "B2C6-gr2.csproj" -c Release -o /app/build
+RUN dotnet build "B2C6-gr2.csproj" -c Release -o /app/build -r linux-arm
 
 FROM build AS publish
-RUN dotnet publish "B2C6-gr2.csproj" -c Release -o /app/publish
+RUN dotnet publish "B2C6-gr2.csproj" -c Release -o /app/publish -r linux-arm
 
 FROM base AS final
 WORKDIR /app
