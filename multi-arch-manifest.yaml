@@ -1,0 +1,11 @@
+image: koen20/b2c6-gr2:latest
+manifests:
+  - image: koen20/b2c6-gr2:amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: koen20/b2c6-gr2:arm32v7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
