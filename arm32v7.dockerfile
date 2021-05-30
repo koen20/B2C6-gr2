@@ -14,6 +14,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm32v7 AS build
+COPY --from=builder qemu-arm-static /usr/bin
 WORKDIR /src
 COPY ["B2C6-gr2/B2C6-gr2.csproj", "B2C6-gr2/"]
 RUN dotnet restore "B2C6-gr2/B2C6-gr2.csproj"
