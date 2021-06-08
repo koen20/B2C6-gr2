@@ -21,15 +21,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.ArtikelPunten)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Serienummer)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                <img style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ArtikelNaam)
             </td>
@@ -38,9 +38,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ArtikelPunten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Serienummer)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
