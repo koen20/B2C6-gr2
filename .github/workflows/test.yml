@@ -20,9 +20,9 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - uses: nanasess/setup-chromedriver@master
-      - run: |
-        export DISPLAY=:99
-        chromedriver --url-base=/wd/hub
+      - name:  Install Google Chrome 
+        run:   |
+                chmod +x ./scripts/InstallChrome.sh
+                            ./scripts/InstallChrome.sh
       - name: Test
         run: dotnet test --no-restore --verbosity normal
