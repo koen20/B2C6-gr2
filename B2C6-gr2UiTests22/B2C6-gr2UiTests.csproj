@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>.NETCoreApp,Version=v5.0</TargetFramework>
-    <RootNamespace>B2C6_gr2Tests</RootNamespace>
+    <RootNamespace>B2C6_gr2UiTests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
