@@ -12,18 +12,25 @@
 <div class="grid-container">
     @foreach (var item in Model)
     {
-    <div class="grid-item">
-        <img class="" style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
+        <div class="grid-item">
+            @{
+                foreach (string filePath in ViewData["filePaths"] as String[])
+                {
+                    if (filePath.Split("/").Last() == item.Id + ".jpg") { 
+                        <img class="" style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
+                    }
+                }
+                
+            }
 
-        @Html.DisplayFor(modelItem => item.ArtikelNaam)
+            <div class="item-content">
+                @Html.DisplayFor(modelItem => item.ArtikelNaam)<br />
+                Punten: @Html.DisplayFor(modelItem => item.ArtikelPunten)
+            </div>
 
-        @Html.DisplayFor(modelItem => item.ArtikelSoortId)
-
-        @Html.DisplayFor(modelItem => item.ArtikelPunten)
-
-        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-    </div>
+            <!--<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+        </div>
     }
 </div>

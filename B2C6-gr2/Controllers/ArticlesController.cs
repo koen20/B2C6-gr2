@@ -7,21 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using B2C6_gr2.Data;
 using B2C6_gr2.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace B2C6_gr2.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly B2C6_gr2Context _context;
+        private IHostingEnvironment Environment;
 
-        public ArticlesController(B2C6_gr2Context context)
+        public ArticlesController(B2C6_gr2Context context, IHostingEnvironment _environment)
         {
             _context = context;
+            Environment = _environment;
         }
 
         // GET: Articles
         public async Task<IActionResult> Index()
         {
+            ViewData["filePaths"] = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, "Images/"));
+
             return View(await _context.Article.ToListAsync());
         }
 
