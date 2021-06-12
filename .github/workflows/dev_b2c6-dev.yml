@@ -80,7 +80,7 @@ jobs:
           dotnet test --no-restore --verbosity normal
 
   zap-security-scan:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     needs: build-and-deploy
     steps:
       - name: ZAP Scan
