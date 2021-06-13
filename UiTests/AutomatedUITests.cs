@@ -28,9 +28,18 @@ namespace B2C6_gr2Tests
         public void Privacy()
         {
             chromeDriver.Navigate()
-                .GoToUrl("https://b2c6-gr2.azurewebsites.net/");
+                .GoToUrl("https://b2c6-dev.azurewebsites.net/");
             //Assert.Equals("", _driver.Title);
             Assert.IsNotNull(chromeDriver.Title);
+        }
+
+        [TestMethod()]
+        public void Articles()
+        {
+            chromeDriver.Navigate()
+                .GoToUrl("https://b2c6-dev.azurewebsites.net/Articles");
+            //Assert.Equals("", _driver.Title);
+            Assert.AreEqual("Artikelen catalogus - B2C6_gr2", chromeDriver.Title);
         }
     }
 }
