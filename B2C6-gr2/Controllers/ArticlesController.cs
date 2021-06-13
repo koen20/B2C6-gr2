@@ -24,11 +24,31 @@ namespace B2C6_gr2.Controllers
         }
 
         // GET: Articles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            ViewData["filePaths"] = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, "Images/"));
+            ViewData["searchString"] = searchString;
 
-            return View(await _context.Article.ToListAsync());
+            var articles = from s in _context.Article
+                           select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                articles = articles.Where(s => s.ArtikelNaam.Contains(searchString));
+            }
+
+            ViewData["filePaths"] = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, "Images/"));
+            switch (sortOrder) {
+                case "name_desc":
+                    articles = articles.OrderByDescending(s => s.ArtikelNaam);
+                    break;
+                case "points":
+                    articles = articles.OrderBy(s => s.ArtikelPunten);
+                    break;
+                default:
+                    articles = articles.OrderByDescending(s => s.ArtikelNaam);
+                    break;
+            }
+            return View(articles);
         }
 
         // GET: Articles/Details/5
