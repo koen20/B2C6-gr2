@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +26,31 @@ namespace B2C6_gr2Tests
         }
 
         [TestMethod()]
-        public void Privacy()
-        {
-            chromeDriver.Navigate()
-                .GoToUrl("https://b2c6-dev.azurewebsites.net/");
-            //Assert.Equals("", _driver.Title);
-            Assert.IsNotNull(chromeDriver.Title);
-        }
-
-        [TestMethod()]
         public void Articles()
         {
             chromeDriver.Navigate()
                 .GoToUrl("https://b2c6-dev.azurewebsites.net/Articles");
-            //Assert.Equals("", _driver.Title);
+            Assert.AreEqual("Artikelen catalogus - B2C6_gr2", chromeDriver.Title);
+        }
+
+        [TestMethod()]
+        public void ArticleSearch()
+        {
+            chromeDriver.Navigate()
+                .GoToUrl("https://b2c6-dev.azurewebsites.net/Articles");
+            chromeDriver.FindElement(By.Id("searchField")).SendKeys("Stoel");
+            chromeDriver.FindElement(By.ClassName("btn")).Click();
+            WebDriverWait wait = new WebDriverWait(chromeDriver, new System.TimeSpan(0, 1, 0));
+            var text = chromeDriver.FindElement(By.ClassName("grid-container"));
+            Assert.IsTrue(text.Text.Contains("Stoel"));
+        }
+
+        [TestMethod()]
+        public void ArticleSort()
+        {
+            chromeDriver.Navigate()
+                .GoToUrl("https://b2c6-dev.azurewebsites.net/Articles");
+            chromeDriver.FindElement(By.Id("sort-point")).Click();
             Assert.AreEqual("Artikelen catalogus - B2C6_gr2", chromeDriver.Title);
         }
     }
