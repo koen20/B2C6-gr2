@@ -1,4 +1,4 @@
-﻿@model IEnumerable<B2C6_gr2.Models.Article>
+@model IEnumerable<B2C6_gr2.Models.Article>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,6 +14,7 @@
     {
         <div class="grid-item">
             @{
+                <!--Check if image exists in the wwwroot/Images folder and display the image.-->
                 foreach (string filePath in ViewData["filePaths"] as String[])
                 {
                     if (filePath.Split("/").Last() == item.Id + ".jpg") { 
