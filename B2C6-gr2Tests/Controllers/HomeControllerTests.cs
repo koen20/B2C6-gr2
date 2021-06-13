@@ -16,5 +16,15 @@ namespace B2C6_gr2.Controllers.Tests
         {
             Assert.IsNotNull(true);
         }
+
+        //[TestMethod()]
+        //public void GetArticles()
+        //{
+
+            
+        //    var articles = from s in _context.Article
+        //                   select s;
+        //    Assert.IsNotNull(true);
+        //}
     }
 }

@@ -16,8 +16,8 @@ namespace B2C6_gr2Tests
         private readonly IWebDriver chromeDriver;
         public AutomatedUITests()
         {
-            chromeDriver = new ChromeDriver(@"C:\Users\koenh\source\repos\B2C6-gr2\B2C6-gr2Tests\");
-            //chromeDriver = new ChromeDriver();
+            //chromeDriver = new ChromeDriver(@"C:\Users\koenh\source\repos\B2C6-gr2\B2C6-gr2Tests\");
+            chromeDriver = new ChromeDriver();
         }
         public void Dispose()
         {
@@ -43,6 +43,15 @@ namespace B2C6_gr2Tests
             WebDriverWait wait = new WebDriverWait(chromeDriver, new System.TimeSpan(0, 1, 0));
             var text = chromeDriver.FindElement(By.ClassName("grid-container"));
             Assert.IsTrue(text.Text.Contains("Stoel"));
+        }
+
+        [TestMethod()]
+        public void ArticleSort()
+        {
+            chromeDriver.Navigate()
+                .GoToUrl("https://b2c6-dev.azurewebsites.net/Articles");
+            chromeDriver.FindElement(By.Id("sort-point")).Click();
+            Assert.AreEqual("Artikelen catalogus - B2C6_gr2", chromeDriver.Title);
         }
     }
 }
