@@ -1,50 +1,37 @@
-﻿@model IEnumerable<B2C6_gr2.Models.Article>
+@model IEnumerable<B2C6_gr2.Models.Article>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Artikelen catalogus";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <!--<a asp-action="Create">Create New</a>-->
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ArtikelNaam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArtikelSoortId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArtikelPunten)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <img style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArtikelNaam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArtikelSoortId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArtikelPunten)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="grid-container">
+    @foreach (var item in Model)
+    {
+        <div class="grid-item">
+            @{
+                <!--Check if image exists in the wwwroot/Images folder and display the image.-->
+                foreach (string filePath in ViewData["filePaths"] as String[])
+                {
+                    if (filePath.Split("/").Last() == item.Id + ".jpg") { 
+                        <img class="" style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
+                    }
+                }
+                
+            }
+
+            <div class="item-content">
+                @Html.DisplayFor(modelItem => item.ArtikelNaam)<br />
+                Punten: @Html.DisplayFor(modelItem => item.ArtikelPunten)
+            </div>
+
+            <!--<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+        </div>
+    }
+</div>
