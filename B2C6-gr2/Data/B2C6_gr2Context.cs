@@ -14,6 +14,6 @@ namespace B2C6_gr2.Data
         {
         }
 
-        public DbSet<B2C6_gr2.Models.Article> Article { get; set; }
+        public DbSet<B2C6_gr2.Models.Artikelen> Artikelen { get; set; }
     }
 }

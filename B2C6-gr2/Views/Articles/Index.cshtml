@@ -1,4 +1,4 @@
-@model IEnumerable<B2C6_gr2.Models.Article>
+@model IEnumerable<B2C6_gr2.Models.Artikelen>
 
 @{
     ViewData["Title"] = "Artikelen catalogus";
@@ -7,7 +7,6 @@
 <h1>Artikelen catalogus</h1>
 
 <p>
-    <!--<a asp-action="Create">Create New</a>-->
     <a asp-action="Index" asp-route-sortOrder="name_desc" id="sort-name">Sorteer op naam</a>
     <a asp-action="Index" asp-route-sortOrder="points" id="sort-point">Sorteer op punten</a>
     <form asp-action="Index" method="get">
@@ -31,9 +30,9 @@
                 <!--Check if image exists in the wwwroot/Images folder and display the image.-->
                 foreach (string filePath in ViewData["filePaths"] as String[])
                 {
-                    if (filePath.Split("/").Last() == item.Id + ".jpg")
+                    if (filePath.Split("/").Last() == item.ArtikelId + ".jpg")
                     {
-                        <img class="" style="max-height: 200px; max-width: 300px;" src='/Images/@(item.Id + ".jpg")' alt="Afbeelding van item" />
+                        <img class="" style="max-height: 200px; max-width: 300px;" src='/Images/@(item.ArtikelId + ".jpg")' alt="Afbeelding van item" />
                     }
                 }
 
@@ -43,10 +42,6 @@
                 @Html.DisplayFor(modelItem => item.ArtikelNaam)<br />
                 Punten: @Html.DisplayFor(modelItem => item.ArtikelPunten)
             </div>
-
-            <!--<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
         </div>
     }
 </div>

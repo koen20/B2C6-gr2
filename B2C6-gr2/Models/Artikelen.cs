@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace B2C6_gr2.Models
 {
-    [Table("Artikelen")]
-    public class Article
+    public partial class Artikelen
     {
-        [Column("ArtikelId")]
-        public int Id { get; set; }
-        public String ArtikelNaam { get; set; }
-        [Column("ArtikelSoortID")]
+        [Key]
+        public int ArtikelId { get; set; }
+        public string ArtikelNaam { get; set; }
         public int ArtikelSoortId { get; set; }
         public int ArtikelPunten { get; set; }
-        public String Serienummer { get; set; }
+        public string Serienummer { get; set; }
     }
 }

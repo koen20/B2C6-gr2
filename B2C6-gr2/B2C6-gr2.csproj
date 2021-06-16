@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\1.jpg" />
+    <None Include="wwwroot\Images\8.jpg" />
   </ItemGroup>
 
   <ItemGroup>
